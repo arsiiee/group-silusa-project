@@ -1,17 +1,31 @@
 <script setup>
 import { ref } from 'vue'
 
+const firstName = ref('')
+const lastName = ref('')
 const email = ref('')
 const password = ref('')
-const showPassword = ref(false)
+const confirmPassword = ref('')
 
-const handleLogin = () => {
-  console.log('Logging in with:', { email: email.value, password: password.value })
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+
+const handleRegister = () => {
+  if (password.value !== confirmPassword.value) {
+    alert('Passwords do not match!')
+    return
+  }
+  console.log('Registering with:', {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    email: email.value,
+    password: password.value,
+  })
 }
 </script>
 
 <template>
-  <div class="login-wrapper">
+  <div class="register-wrapper">
     <!-- Top Left Header Branding -->
     <header class="top-header">
       <div class="header-logo">LC</div>
@@ -19,7 +33,7 @@ const handleLogin = () => {
     </header>
 
     <!-- Main Centered Container -->
-    <main class="login-container">
+    <main class="register-container">
       <!-- Team Badge Pill -->
       <div class="team-badge">
         <svg
@@ -43,20 +57,73 @@ const handleLogin = () => {
       </div>
 
       <!-- Main Glassmorphic Card -->
-      <div class="login-card">
+      <div class="register-card">
         <!-- Logo Circle -->
         <div class="logo-circle">
           <span>LC</span>
         </div>
 
+        <h1 class="main-title">Liceo Creatives</h1>
         <p class="subtitle">School Media Production Booking System</p>
 
         <div class="divider-text">
-          <span>Log In</span>
+          <span>CREATE ACCOUNT</span>
         </div>
 
         <!-- Form -->
-        <form @submit.prevent="handleLogin" class="login-form">
+        <form @submit.prevent="handleRegister" class="register-form">
+          <!-- First Name & Last Name Side-by-Side -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">FIRST NAME</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input id="firstName" v-model="firstName" type="text" placeholder="Juan" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">LAST NAME</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input
+                  id="lastName"
+                  v-model="lastName"
+                  type="text"
+                  placeholder="Dela Cruz"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Address -->
           <div class="form-group">
             <label for="email">EMAIL ADDRESS</label>
             <div class="input-wrapper">
@@ -84,6 +151,7 @@ const handleLogin = () => {
             </div>
           </div>
 
+          <!-- Password -->
           <div class="form-group">
             <label for="password">PASSWORD</label>
             <div class="input-wrapper">
@@ -150,20 +218,82 @@ const handleLogin = () => {
             </div>
           </div>
 
-          <div class="forgot-wrapper">
-            <a href="#" class="forgot-link">Forgot password?</a>
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirmPassword">CONFIRM PASSWORD</label>
+            <div class="input-wrapper">
+              <svg
+                class="input-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <input
+                id="confirmPassword"
+                v-model="confirmPassword"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                placeholder="••••••••••••"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                @click="showConfirmPassword = !showConfirmPassword"
+                :title="showConfirmPassword ? 'Hide password' : 'Show password'"
+              >
+                <svg
+                  v-if="!showConfirmPassword"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg
+                  v-else
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                  <path
+                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+                  />
+                  <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                  <line x1="2" x2="22" y1="2" y2="22" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <button type="submit" class="submit-btn">Log In</button>
+          <button type="submit" class="submit-btn">Create Account</button>
         </form>
 
         <div class="divider-or">
           <span>or</span>
         </div>
 
-        <p class="signup-text">
-          Don't have an account?
-          <router-link to="/register" class="signup-link">Create one</router-link>
+        <p class="login-text">
+          Already have an account? <router-link to="/login" class="login-link">Log In</router-link>
         </p>
       </div>
 
@@ -173,8 +303,8 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
-/* Fullscreen Desktop View with Eye-Catching Full-Bleed Maroon & Gold Gradient */
-.login-wrapper {
+/* Fullscreen Desktop View with Full-Bleed Maroon & Gold Ambient Gradient */
+.register-wrapper {
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -203,7 +333,7 @@ const handleLogin = () => {
     38px 38px;
   background-position: center center;
   position: relative;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   box-sizing: border-box;
   color: #fff;
   overflow-x: hidden;
@@ -238,12 +368,12 @@ const handleLogin = () => {
 }
 
 /* Main Container centered */
-.login-container {
+.register-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 430px;
+  max-width: 460px;
   z-index: 1;
 }
 
@@ -256,7 +386,7 @@ const handleLogin = () => {
   border: 1px solid rgba(224, 202, 101, 0.35);
   padding: 0.4rem 1.1rem;
   border-radius: 50px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   font-size: 0.8rem;
   color: #f5dc78;
   backdrop-filter: blur(12px);
@@ -269,8 +399,8 @@ const handleLogin = () => {
   color: #f5dc78;
 }
 
-/* Glassmorphism Login Card */
-.login-card {
+/* Glassmorphism Register Card */
+.register-card {
   width: 100%;
   background: rgba(20, 14, 18, 0.72);
   backdrop-filter: blur(24px);
@@ -278,7 +408,7 @@ const handleLogin = () => {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(224, 202, 101, 0.35);
   border-radius: 24px;
-  padding: 2.5rem 2.25rem;
+  padding: 2.25rem 2rem;
   box-sizing: border-box;
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.7),
@@ -288,24 +418,31 @@ const handleLogin = () => {
 
 /* Logo Circle */
 .logo-circle {
-  width: 62px;
-  height: 62px;
+  width: 58px;
+  height: 58px;
   background: linear-gradient(135deg, #e52d35 0%, #8c1318 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 0.85rem auto;
+  margin: 0 auto 0.75rem auto;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #fff;
   box-shadow: 0 8px 24px rgba(189, 30, 36, 0.5);
 }
 
+.main-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
 .subtitle {
   color: #a8a8a8;
-  font-size: 0.82rem;
-  margin: 0 0 1.5rem 0;
+  font-size: 0.8rem;
+  margin: 0 0 1.25rem 0;
 }
 
 /* Dividers */
@@ -315,8 +452,9 @@ const handleLogin = () => {
   align-items: center;
   text-align: center;
   color: #777;
-  font-size: 0.75rem;
-  margin: 1.35rem 0;
+  font-size: 0.72rem;
+  margin: 1.1rem 0;
+  letter-spacing: 0.05em;
 }
 
 .divider-text::before,
@@ -335,19 +473,28 @@ const handleLogin = () => {
 }
 
 /* Form Styles */
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 0.95rem;
   text-align: left;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.form-row .form-group {
+  flex: 1;
 }
 
 .form-group label {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   letter-spacing: 0.08em;
   color: #b0b0b0;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
   font-weight: 600;
 }
 
@@ -359,7 +506,7 @@ const handleLogin = () => {
 
 .input-icon {
   position: absolute;
-  left: 0.95rem;
+  left: 0.85rem;
   color: #888;
   pointer-events: none;
   transition: color 0.25s ease;
@@ -371,13 +518,13 @@ const handleLogin = () => {
 
 input {
   width: 100%;
-  padding: 0.82rem 2.5rem 0.82rem 2.6rem;
+  padding: 0.78rem 2.4rem 0.78rem 2.4rem;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(12, 10, 12, 0.75);
   color: #fff;
   box-sizing: border-box;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   outline: none;
   transition: all 0.25s ease;
 }
@@ -390,7 +537,7 @@ input:focus {
 
 .toggle-password {
   position: absolute;
-  right: 0.85rem;
+  right: 0.8rem;
   background: none;
   border: none;
   color: #888;
@@ -406,35 +553,18 @@ input:focus {
   color: #f5dc78;
 }
 
-.forgot-wrapper {
-  text-align: right;
-  margin-top: -0.25rem;
-}
-
-.forgot-link {
-  color: #e0ca65;
-  font-size: 0.78rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.forgot-link:hover {
-  color: #f5dc78;
-  text-decoration: underline;
-}
-
 /* Submit Button */
 .submit-btn {
   width: 100%;
-  padding: 0.85rem;
+  padding: 0.82rem;
   border-radius: 10px;
   border: none;
   background: linear-gradient(135deg, #d32f2f 0%, #8c1318 100%);
   color: white;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   box-shadow: 0 4px 20px rgba(189, 30, 36, 0.45);
   transition: all 0.25s ease;
 }
@@ -445,25 +575,25 @@ input:focus {
   transform: translateY(-1px);
 }
 
-.signup-text {
+.login-text {
   font-size: 0.82rem;
   color: #999;
   margin: 0;
 }
 
-.signup-link {
+.login-link {
   color: #e0ca65;
   text-decoration: none;
   font-weight: 600;
 }
 
-.signup-link:hover {
+.login-link:hover {
   color: #f5dc78;
   text-decoration: underline;
 }
 
 .footer-text {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
   color: #666;
   font-size: 0.72rem;
 }
