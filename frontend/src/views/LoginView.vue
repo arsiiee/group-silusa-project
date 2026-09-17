@@ -1,12 +1,27 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { login } from '../services/auth'
 
 const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
+const isSubmitting = ref(false)
+const errorMessage = ref('')
+const router = useRouter()
 
-const handleLogin = () => {
-  console.log('Logging in with:', { email: email.value, password: password.value })
+const handleLogin = async () => {
+  isSubmitting.value = true
+  errorMessage.value = ''
+
+  try {
+    await login({ email: email.value, password: password.value })
+    await router.push('/dashboard')
+  } catch (error) {
+    errorMessage.value = error.message
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -54,6 +69,8 @@ const handleLogin = () => {
         <div class="divider-text">
           <span>Log In</span>
         </div>
+
+        <p v-if="errorMessage" class="form-error" role="alert">{{ errorMessage }}</p>
 
         <!-- Form -->
         <form @submit.prevent="handleLogin" class="login-form">
@@ -154,7 +171,9 @@ const handleLogin = () => {
             <a href="#" class="forgot-link">Forgot password?</a>
           </div>
 
-          <button type="submit" class="submit-btn">Log In</button>
+          <button type="submit" class="submit-btn" :disabled="isSubmitting">
+            {{ isSubmitting ? 'Signing in...' : 'Log In' }}
+          </button>
         </form>
 
         <div class="divider-or">

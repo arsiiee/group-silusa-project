@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { register } from '../services/auth'
 
 const firstName = ref('')
 const lastName = ref('')
@@ -9,18 +11,33 @@ const confirmPassword = ref('')
 
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
+const isSubmitting = ref(false)
+const errorMessage = ref('')
+const router = useRouter()
 
-const handleRegister = () => {
+const handleRegister = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match!')
+    errorMessage.value = 'Passwords do not match.'
     return
   }
-  console.log('Registering with:', {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-    password: password.value,
-  })
+
+  isSubmitting.value = true
+  errorMessage.value = ''
+
+  try {
+    await register({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+      password_confirmation: confirmPassword.value,
+    })
+    await router.push('/dashboard')
+  } catch (error) {
+    errorMessage.value = error.message
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -69,6 +86,8 @@ const handleRegister = () => {
         <div class="divider-text">
           <span>CREATE ACCOUNT</span>
         </div>
+
+        <p v-if="errorMessage" class="form-error" role="alert">{{ errorMessage }}</p>
 
         <!-- Form -->
         <form @submit.prevent="handleRegister" class="register-form">
@@ -285,7 +304,9 @@ const handleRegister = () => {
             </div>
           </div>
 
-          <button type="submit" class="submit-btn">Create Account</button>
+          <button type="submit" class="submit-btn" :disabled="isSubmitting">
+            {{ isSubmitting ? 'Creating account...' : 'Create Account' }}
+          </button>
         </form>
 
         <div class="divider-or">
