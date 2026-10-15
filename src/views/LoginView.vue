@@ -1,470 +1,418 @@
-<script setup>
-import { ref } from 'vue'
-
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
-
-const handleLogin = () => {
-  console.log('Logging in with:', { email: email.value, password: password.value })
-}
-</script>
-
 <template>
   <div class="login-wrapper">
-    <!-- Top Left Header Branding -->
-    <header class="top-header">
-      <div class="header-logo">LC</div>
-      <span class="header-title">Liceo Creatives</span>
-    </header>
+    <!-- Blurred Rodelsa Building Background PNG -->
+    <div class="rodelsa-bg"></div>
 
-    <!-- Main Centered Container -->
-    <main class="login-container">
-      <!-- Team Badge Pill -->
-      <div class="team-badge">
-        <svg
-          class="badge-icon"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
-          />
-          <path d="M9 18h6" />
-          <path d="M10 22h4" />
-        </svg>
-        <span class="badge-text">The School creatives team</span>
-      </div>
+    <!-- Gold Bottom Strip/Floor Accent -->
+    <div class="gold-floor-accent"></div>
 
-      <!-- Main Glassmorphic Card -->
+    <!-- Main Container for Card & Backdrop -->
+    <div class="login-container">
+      <!-- Dark Maroon Backing Box -->
+      <div class="maroon-backdrop"></div>
+
+      <!-- Main White Login Form Card -->
       <div class="login-card">
-        <!-- Logo Circle -->
-        <div class="logo-circle">
-          <span>LC</span>
+        <!-- Header Section -->
+        <div class="card-header">
+          <h1 class="brand-title">Liceo <span class="highlight">Creatives</span></h1>
         </div>
 
-        <p class="subtitle">School Media Production Booking System</p>
-
-        <div class="divider-text">
-          <span>Log In</span>
-        </div>
-
-        <!-- Form -->
+        <!-- Form Section -->
         <form @submit.prevent="handleLogin" class="login-form">
+          <!-- Email Field -->
           <div class="form-group">
-            <label for="email">EMAIL ADDRESS</label>
-            <div class="input-wrapper">
-              <svg
-                class="input-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
+            <div class="label-row">
+              <label for="email">EMAIL</label>
+              <span class="sub-label">liceo domain</span>
+            </div>
+            <div class="input-container">
+              <span class="icon left-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
               <input
                 id="email"
-                v-model="email"
                 type="email"
+                v-model="email"
                 placeholder="you@liceo.edu.ph"
                 required
               />
             </div>
           </div>
 
+          <!-- Password Field -->
           <div class="form-group">
-            <label for="password">PASSWORD</label>
-            <div class="input-wrapper">
-              <svg
-                class="input-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
+            <div class="label-row">
+              <label for="password" class="input-label">PASSWORD</label>
+
+              <!-- SMALL MAROON FORGOT PASSWORD LINK -->
+              <router-link to="/forgot-password" class="forgot-password-link">
+                Forgot Password?
+              </router-link>
+            </div>
+            <div class="input-container">
+              <span class="icon left-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
               <input
                 id="password"
-                v-model="password"
                 :type="showPassword ? 'text' : 'password'"
-                placeholder="••••••••••••"
+                v-model="password"
+                placeholder="••••••••••••••••"
                 required
               />
-              <button
-                type="button"
-                class="toggle-password"
-                @click="showPassword = !showPassword"
-                :title="showPassword ? 'Hide password' : 'Show password'"
-              >
-                <svg
-                  v-if="!showPassword"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-                <svg
-                  v-else
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                  <path
-                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
-                  />
-                  <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                  <line x1="2" x2="22" y1="2" y2="22" />
+              <button type="button" class="icon right-icon toggle-pwd" @click="showPassword = !showPassword">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </button>
             </div>
           </div>
 
-          <div class="forgot-wrapper">
-            <a href="#" class="forgot-link">Forgot password?</a>
+          <!-- Keep Signed In Checkbox -->
+          <div class="checkbox-group">
+            <label class="custom-checkbox">
+              <input type="checkbox" v-model="keepSignedIn" />
+              <span class="checkmark"></span>
+              <span class="checkbox-label">Keep workstation signed in</span>
+            </label>
           </div>
 
-          <button type="submit" class="submit-btn">Log In</button>
+          <!-- Submit Button -->
+          <button type="submit" class="submit-btn">
+            Log In <span class="arrow">&rarr;</span>
+          </button>
         </form>
 
-        <div class="divider-or">
-          <span>or</span>
+        <!-- Footer / Register Link -->
+        <div class="card-footer">
+          <span>Don't have an account? </span>
+          <router-link to="/register" class="register-link">Register here</router-link>
         </div>
-
-        <p class="signup-text">
-          Don't have an account?
-          <router-link to="/register" class="signup-link">Create one</router-link>
-        </p>
       </div>
-
-      <footer class="footer-text">© 2025 Liceo Creatives · School Media Production</footer>
-    </main>
+    </div>
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const email = ref('you@liceo.edu.ph')
+const password = ref('licE0_cr3At1vEs#2026')
+const showPassword = ref(false)
+const keepSignedIn = ref(true)
+
+const handleLogin = () => {
+  router.push('/dashboard')
+}
+</script>
+
 <style scoped>
-/* Fullscreen Desktop View with Eye-Catching Full-Bleed Maroon & Gold Gradient */
+/* Page Layout & Dark Maroon Background */
 .login-wrapper {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #120406;
-  background-image:
-    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(224, 202, 101, 0.28) 0%, transparent 60%),
-    radial-gradient(
-      ellipse 100% 80% at 50% 50%,
-      rgba(189, 30, 36, 0.35) 0%,
-      rgba(110, 16, 22, 0.25) 50%,
-      rgba(18, 4, 6, 0.9) 100%
-    ),
-    radial-gradient(circle at 10% 90%, rgba(224, 202, 101, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 90% 90%, rgba(189, 30, 36, 0.2) 0%, transparent 40%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    38px 38px,
-    38px 38px;
-  background-position: center center;
   position: relative;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-  color: #fff;
-  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-color: #5b0606;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Header positioning top-left */
-.top-header {
+/* Soft Blurred Rodelsa Background */
+.rodelsa-bg {
   position: absolute;
-  top: 2rem;
-  left: 2.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  z-index: 10;
-}
-
-.header-logo {
-  background: linear-gradient(135deg, #bd1e24 0%, #7e1216 100%);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 0.35rem 0.55rem;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(189, 30, 36, 0.4);
-}
-
-.header-title {
-  color: #e2e2e2;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-/* Main Container centered */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 430px;
+  top: 50%;
+  left: 50%;
+  width: 98%;
+  max-width: 1250px;
+  height: 92%;
+  transform: translate(-50%, -52%);
+  background-image: url('@/assets/rodelsa.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  filter: blur(2px) sepia(0.2) contrast(1.02) brightness(0.98);
+  image-rendering: -webkit-optimize-contrast;
   z-index: 1;
 }
 
-/* Team Badge Pill */
-.team-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(224, 202, 101, 0.1);
-  border: 1px solid rgba(224, 202, 101, 0.35);
-  padding: 0.4rem 1.1rem;
-  border-radius: 50px;
-  margin-bottom: 1.5rem;
-  font-size: 0.8rem;
-  color: #f5dc78;
-  backdrop-filter: blur(12px);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 0 15px rgba(224, 202, 101, 0.15);
-}
-
-.badge-icon {
-  color: #f5dc78;
-}
-
-/* Glassmorphism Login Card */
-.login-card {
+/* Blurred Gold Bottom Strip with 37% Opacity */
+.gold-floor-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  background: rgba(20, 14, 18, 0.72);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(224, 202, 101, 0.35);
-  border-radius: 24px;
-  padding: 2.5rem 2.25rem;
-  box-sizing: border-box;
-  box-shadow:
-    0 30px 70px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(189, 30, 36, 0.22);
-  text-align: center;
+  height: 12%;
+  background: linear-gradient(180deg, #b85f06 0%, #8e4202 100%);
+  opacity: 0.37;
+  filter: blur(8px);
+  z-index: 2;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Logo Circle */
-.logo-circle {
-  width: 62px;
-  height: 62px;
-  background: linear-gradient(135deg, #e52d35 0%, #8c1318 100%);
-  border-radius: 50%;
+/* Center card container layout */
+.login-container {
+  position: relative;
+  z-index: 10;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin: 0 auto 0.85rem auto;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #fff;
-  box-shadow: 0 8px 24px rgba(189, 30, 36, 0.5);
-}
-
-.subtitle {
-  color: #a8a8a8;
-  font-size: 0.82rem;
-  margin: 0 0 1.5rem 0;
-}
-
-/* Dividers */
-.divider-text,
-.divider-or {
-  display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Dark Maroon Background Block Behind Card */
+.maroon-backdrop {
+  position: absolute;
+  width: 380px;
+  height: 290px;
+  background-color: #4a0307;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  transform: translateY(15px);
+  z-index: 3;
+}
+
+/* White Main Card */
+.login-card {
+  position: relative;
+  z-index: 4;
+  width: 330px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 24px 22px 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+/* Title & Branding */
+.card-header {
   text-align: center;
-  color: #777;
-  font-size: 0.75rem;
-  margin: 1.35rem 0;
+  margin-bottom: 20px;
 }
 
-.divider-text::before,
-.divider-text::after,
-.divider-or::before,
-.divider-or::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -0.3px;
 }
 
-.divider-text span,
-.divider-or span {
-  padding: 0 0.85rem;
-  color: #999;
+.brand-title .highlight {
+  color: #c8831f;
 }
 
-/* Form Styles */
-.login-form {
+/* Input Fields Styling */
+.form-group {
+  margin-bottom: 12px;
+}
+
+.label-row {
   display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  text-align: left;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
-.form-group label {
-  display: block;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  color: #b0b0b0;
-  margin-bottom: 0.4rem;
+.label-row label,
+.input-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #27272a;
+  letter-spacing: 0.5px;
+}
+
+.sub-label {
+  font-size: 0.55rem;
+  color: #a1a1aa;
+}
+
+.forgot-password-link {
+  font-size: 10px;
   font-weight: 600;
+  color: #6b0d18;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration 0.2s;
 }
 
-.input-wrapper {
+.forgot-password-link:hover {
+  color: #520912;
+  text-decoration: underline;
+}
+
+.input-container {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.input-icon {
-  position: absolute;
-  left: 0.95rem;
-  color: #888;
-  pointer-events: none;
-  transition: color 0.25s ease;
-}
-
-.input-wrapper:focus-within .input-icon {
-  color: #f5dc78;
-}
-
-input {
+.input-container input {
   width: 100%;
-  padding: 0.82rem 2.5rem 0.82rem 2.6rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(12, 10, 12, 0.75);
-  color: #fff;
-  box-sizing: border-box;
-  font-size: 0.88rem;
+  padding: 8px 30px 8px 32px;
+  border: 1px solid #71717a;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #27272a;
   outline: none;
-  transition: all 0.25s ease;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
-input:focus {
-  border-color: rgba(224, 202, 101, 0.7);
-  box-shadow: 0 0 16px rgba(224, 202, 101, 0.2);
-  background: rgba(16, 12, 15, 0.9);
+.input-container input:focus {
+  border-color: #7a0c1b;
+  box-shadow: 0 0 0 2px rgba(122, 12, 27, 0.15);
 }
 
-.toggle-password {
+.icon {
   position: absolute;
-  right: 0.85rem;
-  background: none;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  padding: 0.25rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
+  color: #71717a;
 }
 
-.toggle-password:hover {
-  color: #f5dc78;
+.left-icon {
+  left: 10px;
 }
 
-.forgot-wrapper {
-  text-align: right;
-  margin-top: -0.25rem;
+.right-icon {
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
-.forgot-link {
-  color: #e0ca65;
-  font-size: 0.78rem;
-  text-decoration: none;
-  transition: color 0.2s;
+.right-icon:hover {
+  color: #18181b;
 }
 
-.forgot-link:hover {
-  color: #f5dc78;
-  text-decoration: underline;
+/* Checkbox */
+.checkbox-group {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  height: 14px;
+  width: 14px;
+  background-color: #fff;
+  border: 1px solid #800a1d;
+  border-radius: 3px;
+  margin-right: 8px;
+  display: inline-block;
+  box-sizing: border-box;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Checkmark background when checked */
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #800a1d;
+  border-color: #800a1d;
+}
+
+/* White checkmark icon created using pseudo-element */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 4px;
+  top: 1px;
+  width: 3px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Show checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-label {
+  font-size: 0.65rem;
+  color: #3f3f46;
+  font-weight: 500;
 }
 
 /* Submit Button */
 .submit-btn {
   width: 100%;
-  padding: 0.85rem;
-  border-radius: 10px;
+  padding: 9px;
+  background-color: #7a0c1b;
+  color: #ffffff;
   border: none;
-  background: linear-gradient(135deg, #d32f2f 0%, #8c1318 100%);
-  color: white;
-  font-weight: 600;
-  font-size: 0.92rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 0.25rem;
-  box-shadow: 0 4px 20px rgba(189, 30, 36, 0.45);
-  transition: all 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .submit-btn:hover {
-  background: linear-gradient(135deg, #e53935 0%, #a0161b 100%);
-  box-shadow: 0 6px 24px rgba(189, 30, 36, 0.65);
-  transform: translateY(-1px);
+  background-color: #610814;
 }
 
-.signup-text {
-  font-size: 0.82rem;
-  color: #999;
-  margin: 0;
+.submit-btn:active {
+  transform: translateY(1px);
 }
 
-.signup-link {
-  color: #e0ca65;
+.arrow {
+  font-size: 0.85rem;
+}
+
+/* Register Footer */
+.card-footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.65rem;
+  color: #52525b;
+}
+
+.register-link {
+  color: #800a1d;
+  font-weight: 700;
   text-decoration: none;
-  font-weight: 600;
 }
 
-.signup-link:hover {
-  color: #f5dc78;
+.register-link:hover {
   text-decoration: underline;
-}
-
-.footer-text {
-  margin-top: 2rem;
-  color: #666;
-  font-size: 0.72rem;
 }
 </style>

@@ -7,15 +7,18 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style>
-/* Reset default margins and padding across the app */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Kept inside Tailwind's `base` layer so the universal reset can never
+   override Tailwind utility classes (see src/assets/main.css). */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body {
-  margin: 0;
-  background-color: #121112;
+  body {
+    margin: 0;
+    background-color: #121112;
+  }
 }
 </style>
