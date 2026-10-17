@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              BigInt    @id @default(autoincrement())
+  firstName       String    @map("first_name") @db.VarChar(100)
+  lastName        String    @map("last_name") @db.VarChar(100)
+  department      String    @db.VarChar(255)
+  email           String    @unique @db.VarChar(255)
+  phone           String?   @db.VarChar(50)
+  emailVerifiedAt DateTime? @map("email_verified_at") @db.Timestamp(0)
+  password        String    @db.VarChar(255)
+  rememberToken   String?   @map("remember_token") @db.VarChar(100)
+  createdAt       DateTime? @map("created_at") @db.Timestamp(0)
+  updatedAt       DateTime? @map("updated_at") @db.Timestamp(0)
+
+  mediaRequests MediaRequest[]
+
+  @@map("users")
+}
+
+model MediaRequest {
+  id                 BigInt    @id @default(autoincrement())
+  userId             BigInt    @map("user_id")
+  eventTitle         String    @map("event_title") @db.VarChar(255)
+  requestedServices  Json      @map("requested_services")
+  eventDate          DateTime  @map("event_date") @db.Date
+  callTime           String    @map("call_time") @db.VarChar(100)
+  venue              String    @db.VarChar(255)
+  targetDeliveryDate DateTime  @map("target_delivery_date") @db.Date
+  coverageDirectives String?   @map("coverage_directives") @db.Text
+  status             String    @default("pending") @db.VarChar(30)
+  createdAt          DateTime? @map("created_at") @db.Timestamp(0)
+  updatedAt          DateTime? @map("updated_at") @db.Timestamp(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("media_requests")
+}
+
+model PersonalAccessToken {
+  id            BigInt    @id @default(autoincrement())
+  tokenableType String    @map("tokenable_type") @db.VarChar(255)
+  tokenableId   BigInt    @map("tokenable_id")
+  name          String    @db.Text
+  token         String    @unique @db.VarChar(64)
+  abilities     String?   @db.Text
+  lastUsedAt    DateTime? @map("last_used_at") @db.Timestamp(0)
+  expiresAt     DateTime? @map("expires_at") @db.Timestamp(0)
+  createdAt     DateTime? @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamp(0)
+
+  @@index([tokenableType, tokenableId])
+  @@index([expiresAt])
+  @@map("personal_access_tokens")
+}
